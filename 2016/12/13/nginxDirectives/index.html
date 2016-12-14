@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="nginx," />
 
 
 
@@ -84,12 +84,36 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="#nginx.conf的结构
+
+simple directive（简单指令） 如 worker_processes    1;
+block directive (块状指令) 如 http { }
+
+nginx.conf文件结构:文件结构大体结构
+12345main &amp;#123;   simple_directives parameters;    events&amp;#123;         e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginxDirectives">
+<meta property="og:url" content="http://yoursite.com/2016/12/13/nginxDirectives/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#nginx.conf的结构
+
+simple directive（简单指令） 如 worker_processes    1;
+block directive (块状指令) 如 http { }
+
+nginx.conf文件结构:文件结构大体结构
+12345main &amp;#123;   simple_directives parameters;    events&amp;#123;         e">
+<meta property="og:image" content="http://yoursite.com/../images/nginxConf_structure.png">
+<meta property="og:updated_time" content="2016-12-14T07:56:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="nginxDirectives">
+<meta name="twitter:description" content="#nginx.conf的结构
+
+simple directive（简单指令） 如 worker_processes    1;
+block directive (块状指令) 如 http { }
+
+nginx.conf文件结构:文件结构大体结构
+12345main &amp;#123;   simple_directives parameters;    events&amp;#123;         e">
+<meta name="twitter:image" content="http://yoursite.com/../images/nginxConf_structure.png">
 
 
 
@@ -107,7 +131,7 @@
   };
 </script>
 
-  <title> Hexo </title>
+  <title> nginxDirectives | Hexo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
@@ -128,9 +152,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -217,9 +239,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -239,103 +261,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/12/14/testPost/" itemprop="url">
-                  testPost
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-14T09:14:26+08:00" content="2016-12-14">
-              2016-12-14
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/13/nginxDirectives/" itemprop="url">
-                  nginxDirectives
-                </a>
+                nginxDirectives
               
             
           </h1>
@@ -375,9 +301,7 @@
       
 
       
-        
-          
-            <p>#nginx.conf的结构</p>
+        <p>#nginx.conf的结构</p>
 <ul>
 <li>simple directive（简单指令） 如 worker_processes    1;</li>
 <li>block directive (块状指令) 如 http { }</li>
@@ -388,271 +312,62 @@
 <p>nginx.conf基础默认配置项（带注释)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">                                                                                                                                                                                                                                              </div><div class="line">#指定用什么用户去跑work process，默认用linux下的nobody用户                                                                                                                                                                                   </div><div class="line">#user  nobody; </div><div class="line">#工作进程数,可以设置为auto,nginx会探测cpu核心数，启动相同数量的work process</div><div class="line">worker_processes  1;  </div><div class="line">#错误日志存放位置.既然叫错误日志，通常应设置级别为warn|error</div><div class="line">#error_log  logs/error.log;</div><div class="line">#error_log  logs/error.log  notice;</div><div class="line">#error_log  logs/error.log  info;</div><div class="line">#主进程pid文件存放的地点</div><div class="line">#pid        logs/nginx.pid;</div><div class="line"></div><div class="line">#events模块只能在main上下文中，并且只能配置一个，</div><div class="line">#其中可以包含7种简单指令</div><div class="line">events &#123;</div><div class="line">    worker_connections  1024; </div><div class="line">    #每个worker process可以支持的最大连接数，生成环境根据需要可以设置更大一些（9000）</div><div class="line">    #值得注意的是，此数字是包括了反向代理等等所需要的连接数在内，并不仅仅是指web端发起的连接数</div><div class="line">   #multi_accept on #是否work进程一次只接收一个连接。并发较大时应打开</div><div class="line">   #use epoll #选择底层处理连接的模型，Linux下默认epoll，无需自己设置</div><div class="line">   #accept_mutex </div><div class="line">   #accept_mutex_delay</div><div class="line">   #上面2参数是表示是否让worker进程使用one by one的工作模式，默认是关闭的。</div><div class="line">   #开启的时候，在低并发的时候非工作状态下的worker process将休眠，避免浪费资源。</div><div class="line">&#125;</div><div class="line"></div><div class="line">#nginx配置的“核心”</div><div class="line">http &#123;</div><div class="line">    #include指令用于加载单独的配置文件模块，避免过于臃肿</div><div class="line">    #而这里的mime.types表示此文件应该在nginx.conf的同级目录下。</div><div class="line">    #其中的types模块用于表示nginx响应的文件后缀名和content-type直接的映射</div><div class="line">    #比如你想要让浏览器识别你返回的mytxt.data文件为文本内容在浏览器中显示为文本,添加 text/plain   data;</div><div class="line">    include       mime.types;</div><div class="line">    #上面的匹配失败后，默认给的响应内容类型</div><div class="line">    default_type  application/octet-stream;</div><div class="line"></div><div class="line">    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"></div><div class="line">    #access_log  logs/access.log  main;</div><div class="line">    #io时不阻塞处理connection，在传输大文件时使用，细节待研究</div><div class="line">    sendfile        on; </div><div class="line">    #tcp_nopush     on;#貌似意思是只有在sendfile启用时使用，让nginx发包的时候满包发送（不明白）通常不使用</div><div class="line">    #连接idle的最大时间，现代浏览器往往在一个页面同时打开多个connection传输js,css,html等。</div><div class="line">    #设置最大idle时间避免过长等待浪费connection</div><div class="line">    #keepalive_timeout  0;</div><div class="line">    keepalive_timeout  65; </div><div class="line">    #开启response响应压缩，可以节省带宽，默认关闭。细节待研究</div><div class="line">    #gzip  on;</div><div class="line">    #server 上下文代表一个虚拟主机，可以有多个，内嵌在比如http,mail模块中</div><div class="line">    server &#123;</div><div class="line">            listen 80; </div><div class="line">            server_name myapp.info; #如果是在本地试验，要修改/etc/hosts的域名映射到本机</div><div class="line">            location / &#123; #location的匹配规则too tricky，单开一篇blog </div><div class="line">                    root /usr/local/nginx;</div><div class="line">            &#125;   </div><div class="line">     &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/08/firstShot/" itemprop="url">
-                  各种常见单例模式的实现及原理
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-08T17:59:20+08:00" content="2016-12-08">
-              2016-12-08
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h1 id="最简单的饿汉模式"><a href="#最简单的饿汉模式" class="headerlink" title="最简单的饿汉模式"></a>最简单的饿汉模式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package org.yyf.designPattern.buildStyle.singleton;</div><div class="line"></div><div class="line">import java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by tobi on 16-7-25.</div><div class="line"> */</div><div class="line">public class EagerSingleton &#123;</div><div class="line">    private EagerSingleton() &#123;</div><div class="line">        System.out.println(&quot;init!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static final EagerSingleton singleton = new EagerSingleton();</div><div class="line"></div><div class="line">    public static EagerSingleton getSingleton() &#123;</div><div class="line">        return singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;hei,main thread gogogogo!&quot;);</div><div class="line">        TimeUnit.SECONDS.sleep(2);</div><div class="line">        System.out.println(&quot;before getSinleton method!&quot;);</div><div class="line">        EagerSingleton singleton = EagerSingleton.getSingleton();</div><div class="line">        EagerSingleton singleton1 = EagerSingleton.getSingleton();</div><div class="line">        System.out.println(singleton==singleton1);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行输出：</p>
-<pre><code>init!
-hei,main thread gogogogo!
-before getSinleton method!
-true 
-</code></pre><p>注意init一开始就打印了，这是因为static属性是在class类对象加载时执行的，而普通的类，一开始就会被jvm加载。此既为饿汉模式的原因</p>
-<h1 id="枚举实现单例"><a href="#枚举实现单例" class="headerlink" title="枚举实现单例"></a>枚举实现单例</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package org.yyf.designPattern.buildStyle.singleton;</div><div class="line">import java.util.concurrent.TimeUnit;</div><div class="line">/**</div><div class="line"> * Created by tobi on 16-7-25.</div><div class="line"> */</div><div class="line">public enum EnumSingleton &#123;</div><div class="line">    singleton;</div><div class="line"></div><div class="line">    EnumSingleton() &#123;</div><div class="line">        System.out.println(&quot;init!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void doSomething() &#123;</div><div class="line">        System.out.println(&quot;i do sth&quot;);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;go!&quot;);</div><div class="line">        TimeUnit.SECONDS.sleep(2);</div><div class="line">        System.out.println(&quot;sleep finished&quot;);</div><div class="line">        EnumSingleton.singleton.doSomething();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行输出：</p>
-<pre><code>init!
-go!
-sleep finished
-i do sth
-</code></pre><p>这利用的是一个枚举实例在jvm中只会实例化一个的特性，effective java中有提及</p>
-<hr>
-<h1 id="静态内部类实现单例（懒汉模式）"><a href="#静态内部类实现单例（懒汉模式）" class="headerlink" title="静态内部类实现单例（懒汉模式）"></a>静态内部类实现单例（懒汉模式）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">package org.yyf.designPattern.buildStyle.singleton;</div><div class="line"></div><div class="line">import java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by tobi on 16-7-25.</div><div class="line"> */</div><div class="line">public class LazySingleton &#123;</div><div class="line">    private LazySingleton()&#123;</div><div class="line">        System.out.println(&quot;singleton　init&quot;);</div><div class="line">    &#125;</div><div class="line">    private static class SingletonHolder&#123;</div><div class="line">        private static final LazySingleton singleton = new LazySingleton();</div><div class="line">    &#125;</div><div class="line">    public static LazySingleton getInstance()&#123;</div><div class="line">        return SingletonHolder.singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;gogogo!&quot;);</div><div class="line">        TimeUnit.SECONDS.sleep(2);</div><div class="line">        System.out.println(&quot;before getSinleton method!&quot;);</div><div class="line">        LazySingleton instance = LazySingleton.getInstance();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行输出:</p>
-<pre><code>gogogo!
-before getSinleton method!
-singleton　init
-</code></pre><p>注意构造函数的输出是在单例的某个方法被调用时，这里是利用内部类只有在被调用时才被加载初始化的特性实现单例的延迟加载。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/12/08/firstShot/" rel="next" title="各种常见单例模式的实现及原理">
+                <i class="fa fa-chevron-left"></i> 各种常见单例模式的实现及原理
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/12/08/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-08T17:51:18+08:00" content="2016-12-08">
-              2016-12-08
-            </time>
-          </span>
-
-          
-
-          
+              <a href="/2016/12/14/testPost/" rel="prev" title="testPost">
+                testPost <i class="fa fa-chevron-right"></i>
+              </a>
             
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -660,6 +375,10 @@ singleton　init
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -679,8 +398,17 @@ singleton　init
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -730,6 +458,17 @@ singleton　init
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -826,6 +565,10 @@ singleton　init
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
