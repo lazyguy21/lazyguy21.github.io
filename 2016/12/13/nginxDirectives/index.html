@@ -102,8 +102,8 @@ block directive (块状指令) 如 http { }
 
 nginx.conf文件结构:文件结构大体结构
 1234567main &amp;#123;  simple_directives parameters;    events&amp;#123;">
-<meta property="og:image" content="http://yoursite.com/../img/nginxConf_structure.png">
-<meta property="og:updated_time" content="2016-12-14T08:18:22.000Z">
+<meta property="og:image" content="http://yoursite.com/img/nginxConf_structure.png">
+<meta property="og:updated_time" content="2016-12-14T08:22:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginxDirectives">
 <meta name="twitter:description" content="#nginx.conf的结构和基础配置解析
@@ -113,7 +113,7 @@ block directive (块状指令) 如 http { }
 
 nginx.conf文件结构:文件结构大体结构
 1234567main &amp;#123;  simple_directives parameters;    events&amp;#123;">
-<meta name="twitter:image" content="http://yoursite.com/../img/nginxConf_structure.png">
+<meta name="twitter:image" content="http://yoursite.com/img/nginxConf_structure.png">
 
 
 
@@ -189,7 +189,7 @@ nginx.conf文件结构:文件结构大体结构
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -199,7 +199,7 @@ nginx.conf文件结构:文件结构大体结构
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -219,7 +219,7 @@ nginx.conf文件结构:文件结构大体结构
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -272,7 +272,7 @@ nginx.conf文件结构:文件结构大体结构
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
             <time itemprop="dateCreated" datetime="2016-12-13T14:57:44+08:00" content="2016-12-13">
               2016-12-13
             </time>
@@ -284,7 +284,7 @@ nginx.conf文件结构:文件结构大体结构
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">in</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/nginx/" itemprop="url" rel="index">
@@ -325,7 +325,7 @@ nginx.conf文件结构:文件结构大体结构
 <li>simple directive（简单指令） 如 worker_processes    1;</li>
 <li>block directive (块状指令) 如 http { }</li>
 </ul>
-<p>nginx.conf文件结构:<br><img src="../img/nginxConf_structure.png" alt="结构"><br>文件结构大体结构</p>
+<p>nginx.conf文件结构:<br><img src="/img/nginxConf_structure.png" alt="结构"><br>文件结构大体结构</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">main &#123;  simple_directives parameters;  </div><div class="line">  events&#123;        event_directives parameters;        &#125;</div><div class="line">  http&#123;</div><div class="line">        http_directives parameters;  server&#123;        server_directives parameters;                location&#123;           location_directives parameters;                    &#125;</div><div class="line">       &#125;  &#125; </div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 <p>其实最外层的main在nginx.conf中是默认实现的，并不会实际写出来。</p>
 <p>nginx.conf基础默认配置项（带注释)：</p>
@@ -420,10 +420,10 @@ nginx.conf文件结构:文件结构大体结构
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -440,7 +440,7 @@ nginx.conf文件结构:文件结构大体结构
           <div class="site-state-item site-state-posts">
             <a href="/archives">
               <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">posts</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -448,7 +448,7 @@ nginx.conf文件结构:文件结构大体结构
             <div class="site-state-item site-state-categories">
               <a href="/categories">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">categories</span>
+                <span class="site-state-item-name">Kategorien</span>
               </a>
             </div>
           
@@ -457,7 +457,7 @@ nginx.conf文件结构:文件结构大体结构
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -485,7 +485,7 @@ nginx.conf文件结构:文件结构大体结构
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <p class="post-toc-empty">Dieser Artikel hat kein Inhaltsverzeichnis</p>
             
           </div>
         </section>
@@ -512,7 +512,7 @@ nginx.conf文件结构:文件结构大体结构
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
