@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="nginx," />
+  <meta name="keywords" content="Lazyguy's Blog" />
 
 
 
@@ -84,13 +84,82 @@
 
 
 
+<meta name="description" content="《高性能mysql》第4章读书笔记
+数字类型mysql的数字大体分为两种整数类型和实数类型(既小数类型)
+整数类型
+
+
+TINYINT
+SMALLINT
+MEDIUMINT
+INT
+BIGINT
+
+
+
+
+8位
+16位
+24位
+32位
+64位
+
+
+
+mysql中按从小到大一个五种整数类型，对应在java应用中，我们一般常常使用int对应java的integer，bigint对应java的long，因">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx-architecture">
-<meta property="og:url" content="http://yoursite.com/2016/12/16/nginx-architecture/index.html">
+<meta property="og:title" content="mysql-数据类型">
+<meta property="og:url" content="http://yoursite.com/2016/12/28/mysql-schemaAndDataType/index.html">
 <meta property="og:site_name" content="Tobby's Blog">
-<meta property="og:updated_time" content="2016-12-16T06:56:11.000Z">
+<meta property="og:description" content="《高性能mysql》第4章读书笔记
+数字类型mysql的数字大体分为两种整数类型和实数类型(既小数类型)
+整数类型
+
+
+TINYINT
+SMALLINT
+MEDIUMINT
+INT
+BIGINT
+
+
+
+
+8位
+16位
+24位
+32位
+64位
+
+
+
+mysql中按从小到大一个五种整数类型，对应在java应用中，我们一般常常使用int对应java的integer，bigint对应java的long，因">
+<meta property="og:updated_time" content="2016-12-29T08:28:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx-architecture">
+<meta name="twitter:title" content="mysql-数据类型">
+<meta name="twitter:description" content="《高性能mysql》第4章读书笔记
+数字类型mysql的数字大体分为两种整数类型和实数类型(既小数类型)
+整数类型
+
+
+TINYINT
+SMALLINT
+MEDIUMINT
+INT
+BIGINT
+
+
+
+
+8位
+16位
+24位
+32位
+64位
+
+
+
+mysql中按从小到大一个五种整数类型，对应在java应用中，我们一般常常使用int对应java的integer，bigint对应java的long，因">
 
 
 
@@ -118,13 +187,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/16/nginx-architecture/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/28/mysql-schemaAndDataType/"/>
 
 
 
 
 
-  <title> nginx-architecture | Tobby's Blog </title>
+  <title> mysql-数据类型 | Tobby's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -245,7 +314,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/16/nginx-architecture/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/28/mysql-schemaAndDataType/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Tobby">
@@ -269,7 +338,7 @@
             
             
               
-                nginx-architecture
+                mysql-数据类型
               
             
           </h1>
@@ -282,8 +351,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-16T14:55:16+08:00">
-                2016-12-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-28T17:42:45+08:00">
+                2016-12-28
               </time>
             
 
@@ -301,8 +370,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -336,7 +405,56 @@
       
 
       
-        
+        <p><strong>《高性能mysql》第4章读书笔记</strong></p>
+<h3 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h3><p>mysql的数字大体分为两种整数类型和实数类型(既小数类型)</p>
+<h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><table>
+<thead>
+<tr>
+<th>TINYINT</th>
+<th>SMALLINT</th>
+<th>MEDIUMINT</th>
+<th>INT</th>
+<th>BIGINT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8位</td>
+<td>16位</td>
+<td>24位</td>
+<td>32位</td>
+<td>64位</td>
+</tr>
+</tbody>
+</table>
+<p>mysql中按从小到大一个五种整数类型，对应在java应用中，我们一般常常使用int对应java的integer，bigint对应java的long，因为java的integer刚好是4个字节，long8个字节。</p>
+<p>注意创建表的时候整数类型后面的括号，比如 int(3),并不是表示可以有最多3个字符的整数，既-999到999。<strong>它的真实作用是限制某些客户端工具显示数字的时候只显示……3个数！所以其实没啥用，带不带都可以</strong>。</p>
+<p>整数和小数类型都可以带上 unsigned，表示不不存负数，这样可以大一位。比如tinyint本来是-128~127,而unsigned tinyint表示 0~255</p>
+<h4 id="实数类型"><a href="#实数类型" class="headerlink" title="实数类型"></a>实数类型</h4><p>float和double分别占用4个字节和8个字节。<strong>当超过位数后，按照四舍五入保存近似值。这在保存钱之类的高精度数字时是很危险的，所以就别用好了！</strong></p>
+<p>float和double同时也可以使用如float(5,2)这样的样式来强制规定，小数位+整数位一共只能5位，小数位只保留2位。当个位数超过时，mysql拒绝插入，当小数位超过时，4舍五入。但是这事实上及其让人迷惑。</p>
+<p><strong>而且当你用相关列做条件查询时，没有在括号中制定精度的float会导致查询失败，必须指定精度</strong></p>
+<p>比如 </p>
+<p>money字段 设置为float,</p>
+<p>insert into  table (num) values (0.12); </p>
+<p>select  * from table where num=0.12的话,查不出任何数据。</p>
+<p>而如果指定了精度，比如money float(6,2) //超过6位就开始取近似值了</p>
+<p>insert into  table (num) values (0.12); </p>
+<p>select  * from table where num=0.12的话,得到数据。</p>
+<p>相比之下decimal(m,n)更容易理解，就是最多m位，小数最多n位超过后四舍五入（据说有的3.0以下的版本因为是转换成double之类的类型，行为不相同）</p>
+<p><strong>decimal的优势在于不会莫名其妙的在整数位四舍五入，但是在任然要注意超过范围后，小数位的四舍五入是否是你想要的,或者直接用bigint存储你的数字好了，存取的时候乘除相应的小数位即可</strong></p>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><h4 id="char和varchar"><a href="#char和varchar" class="headerlink" title="char和varchar"></a>char和varchar</h4><p>前者是定长，后者是边长</p>
+<p>通常在innodb引擎中我们都使用varchar。</p>
+<p>但是偶尔在存的数据长度一定时，比如身份证。</p>
+<p>或者值经常变化的字段使用char，省掉计算数据长度的时间，mysql会快点。</p>
+<p>比较奇怪的是使用char的时候，字符串末尾如果是空格，会被截断，不被存下来。</p>
+<p><strong>另外varchar(2)代表的可以存2个字符，不论你是存的中文还是英文都是2个，跟oracle不同。</strong></p>
+<h4 id="blob和text"><a href="#blob和text" class="headerlink" title="blob和text"></a>blob和text</h4><p>额，考虑用nosql来存吧。</p>
+<h3 id="时间类型"><a href="#时间类型" class="headerlink" title="时间类型"></a>时间类型</h3><h4 id="DATETIME和TIMESTAMP"><a href="#DATETIME和TIMESTAMP" class="headerlink" title="DATETIME和TIMESTAMP"></a>DATETIME和TIMESTAMP</h4><p>2者在显示的精度上并无区别，都是精确到秒</p>
+<p>不同的是datetime底层存的其实是格式为YYYYMMDDHHMMSS,使用8个字节存储的整数中，所以其实这个类型是没有时区的概念的，你存的多少就是多少。</p>
+<p>但是timestamp是将你存的时间按照时区存为了unixtime，只占用4个字节。</p>
+<p>所以其显示也依赖于mysql server上的时区,所以它只能存到2038年为上限，存储一些未来时间的时候要注意(不注意也没关系，反正你存不进去）。</p>
+<h4 id="date和time"><a href="#date和time" class="headerlink" title="date和time"></a>date和time</h4><p>当你只想保存年月日或者时分秒时使用</p>
+
       
     </div>
 
@@ -357,19 +475,13 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/nginx/" rel="tag"># nginx</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/16/nginx-module/" rel="next" title="nginx模块概览">
-                <i class="fa fa-chevron-left"></i> nginx模块概览
+              <a href="/2016/12/26/springboot-actuator/" rel="next" title="springboot-2—actuator">
+                <i class="fa fa-chevron-left"></i> springboot-2—actuator
               </a>
             
           </div>
@@ -377,10 +489,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/22/nginx-proxy/" rel="prev" title="nginx反向代理2台tomcat实践(使用docker-compose)">
-                nginx反向代理2台tomcat实践(使用docker-compose) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,8 +535,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -481,6 +598,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字类型"><span class="nav-number">1.</span> <span class="nav-text">数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整数类型"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实数类型"><span class="nav-number">1.2.</span> <span class="nav-text">实数类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串类型"><span class="nav-number">2.</span> <span class="nav-text">字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#char和varchar"><span class="nav-number">2.1.</span> <span class="nav-text">char和varchar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#blob和text"><span class="nav-number">2.2.</span> <span class="nav-text">blob和text</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间类型"><span class="nav-number">3.</span> <span class="nav-text">时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DATETIME和TIMESTAMP"><span class="nav-number">3.1.</span> <span class="nav-text">DATETIME和TIMESTAMP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#date和time"><span class="nav-number">3.2.</span> <span class="nav-text">date和time</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

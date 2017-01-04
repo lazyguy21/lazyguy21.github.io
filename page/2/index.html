@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="设计模式,单例," />
+  <meta name="keywords" content="Lazyguy's Blog" />
 
 
 
@@ -84,16 +84,12 @@
 
 
 
-<meta name="description" content="最简单的饿汉模式123456789101112131415161718192021222324252627package org.yyf.designPattern.buildStyle.singleton;import java.util.concurrent.TimeUnit;/** * Created by tobi on 16-7-25. */public class EagerSingl">
-<meta property="og:type" content="article">
-<meta property="og:title" content="各种常见单例模式的实现及原理">
-<meta property="og:url" content="http://yoursite.com/2016/12/08/firstShot/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tobby's Blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="Tobby's Blog">
-<meta property="og:description" content="最简单的饿汉模式123456789101112131415161718192021222324252627package org.yyf.designPattern.buildStyle.singleton;import java.util.concurrent.TimeUnit;/** * Created by tobi on 16-7-25. */public class EagerSingl">
-<meta property="og:updated_time" content="2016-12-14T01:16:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="各种常见单例模式的实现及原理">
-<meta name="twitter:description" content="最简单的饿汉模式123456789101112131415161718192021222324252627package org.yyf.designPattern.buildStyle.singleton;import java.util.concurrent.TimeUnit;/** * Created by tobi on 16-7-25. */public class EagerSingl">
+<meta name="twitter:title" content="Tobby's Blog">
 
 
 
@@ -121,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/08/firstShot/"/>
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
 
 
 
 
 
-  <title> 各种常见单例模式的实现及原理 | Tobby's Blog </title>
+  <title> Tobby's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -148,7 +144,9 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +235,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -272,7 +270,10 @@
             
             
               
-                各种常见单例模式的实现及原理
+                
+                <a class="post-title-link" href="/2016/12/08/firstShot/" itemprop="url">
+                  各种常见单例模式的实现及原理
+                </a>
               
             
           </h1>
@@ -339,7 +340,9 @@
       
 
       
-        <h1 id="最简单的饿汉模式"><a href="#最简单的饿汉模式" class="headerlink" title="最简单的饿汉模式"></a>最简单的饿汉模式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package org.yyf.designPattern.buildStyle.singleton;</div><div class="line"></div><div class="line">import java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by tobi on 16-7-25.</div><div class="line"> */</div><div class="line">public class EagerSingleton &#123;</div><div class="line">    private EagerSingleton() &#123;</div><div class="line">        System.out.println(&quot;init!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static final EagerSingleton singleton = new EagerSingleton();</div><div class="line"></div><div class="line">    public static EagerSingleton getSingleton() &#123;</div><div class="line">        return singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;hei,main thread gogogogo!&quot;);</div><div class="line">        TimeUnit.SECONDS.sleep(2);</div><div class="line">        System.out.println(&quot;before getSinleton method!&quot;);</div><div class="line">        EagerSingleton singleton = EagerSingleton.getSingleton();</div><div class="line">        EagerSingleton singleton1 = EagerSingleton.getSingleton();</div><div class="line">        System.out.println(singleton==singleton1);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        
+          
+            <h1 id="最简单的饿汉模式"><a href="#最简单的饿汉模式" class="headerlink" title="最简单的饿汉模式"></a>最简单的饿汉模式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package org.yyf.designPattern.buildStyle.singleton;</div><div class="line"></div><div class="line">import java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by tobi on 16-7-25.</div><div class="line"> */</div><div class="line">public class EagerSingleton &#123;</div><div class="line">    private EagerSingleton() &#123;</div><div class="line">        System.out.println(&quot;init!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static final EagerSingleton singleton = new EagerSingleton();</div><div class="line"></div><div class="line">    public static EagerSingleton getSingleton() &#123;</div><div class="line">        return singleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        System.out.println(&quot;hei,main thread gogogogo!&quot;);</div><div class="line">        TimeUnit.SECONDS.sleep(2);</div><div class="line">        System.out.println(&quot;before getSinleton method!&quot;);</div><div class="line">        EagerSingleton singleton = EagerSingleton.getSingleton();</div><div class="line">        EagerSingleton singleton1 = EagerSingleton.getSingleton();</div><div class="line">        System.out.println(singleton==singleton1);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>运行输出：</p>
 <pre><code>init!
 hei,main thread gogogogo!
@@ -361,66 +364,166 @@ before getSinleton method!
 singleton　init
 </code></pre><p>注意构造函数的输出是在单例的某个方法被调用时，这里是利用内部类只有在被调用时才被加载初始化的特性实现单例的延迟加载。</p>
 
+          
+        
       
     </div>
 
     <div>
       
-        
-
-      
     </div>
 
     <div>
-      
-        
-
       
     </div>
 
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/设计模式-单例/" rel="tag"># 设计模式,单例</a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/12/08/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/13/nginxDirectives/" rel="prev" title="nginx.conf的结构和基础配置解析">
-                nginx.conf的结构和基础配置解析 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/08/hello-world/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tobby">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Tobby's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Tobby's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/08/hello-world/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-08T17:51:18+08:00">
+                2016-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+          
+        
       
     </div>
-  </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -428,10 +531,6 @@ singleton　init
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -451,17 +550,8 @@ singleton　init
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -514,22 +604,6 @@ singleton　init
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最简单的饿汉模式"><span class="nav-number">1.</span> <span class="nav-text">最简单的饿汉模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#枚举实现单例"><span class="nav-number">2.</span> <span class="nav-text">枚举实现单例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态内部类实现单例（懒汉模式）"><span class="nav-number">3.</span> <span class="nav-text">静态内部类实现单例（懒汉模式）</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
@@ -628,10 +702,6 @@ singleton　init
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 

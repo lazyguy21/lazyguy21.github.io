@@ -99,7 +99,7 @@
 结构和内容如下图:
 其中nginx.conf,mime.types,h">
 <meta property="og:image" content="http://yoursite.com/img/nginx_tomcat.png">
-<meta property="og:updated_time" content="2016-12-22T07:07:26.000Z">
+<meta property="og:updated_time" content="2016-12-22T08:03:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx反向代理2台tomcat实践(使用docker-compose)">
 <meta name="twitter:description" content="此篇blog是笔者读《Nginx.From.Beginner.to.Pro》第8章的实践总结
@@ -372,6 +372,11 @@
 <p>按照ip哈希，当你的后台存有状态比如session，希望同一个客户端被代理到同一台tomcat时使用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">upstream backend&#123;        </div><div class="line">	hash $scheme$request_uri;</div><div class="line">    server 10.0.2.6;		 </div><div class="line">    server 10.0.2.7;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>按照请求的url进行hash。</p>
+<h3 id="定制http-header"><a href="#定制http-header" class="headerlink" title="定制http header"></a>定制http header</h3><p>nginx反向代理tomcat的时候，会影响tomcat接收到的http header头</p>
+<p>例如nginx会自动去掉没有值得空header头</p>
+<p>不能使用下划线（可以修改）</p>
+<p>tomcat如果要得到客户端真实的ip，nginx需要在location中设置        </p>
+<p>proxy_set_header X-Real-IP $remote_addr;（相当于设置了一个X-Real-IP的header头)</p>
 
       
     </div>
@@ -413,6 +418,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/22/springboot-first/" rel="prev" title="springboot-1--基本结构">
+                springboot-1--基本结构 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -480,7 +489,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -488,7 +497,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -497,7 +506,7 @@
           
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -532,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先准备实践环境"><span class="nav-number">1.</span> <span class="nav-text">首先准备实践环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建单独的文件夹作为实验环境"><span class="nav-number">2.</span> <span class="nav-text">新建单独的文件夹作为实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-yml内容"><span class="nav-number">3.</span> <span class="nav-text">docker-compose.yml内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-conf中的核心配置"><span class="nav-number">4.</span> <span class="nav-text">nginx.conf中的核心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx其他常见的负载策略"><span class="nav-number">5.</span> <span class="nav-text">nginx其他常见的负载策略</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先准备实践环境"><span class="nav-number">1.</span> <span class="nav-text">首先准备实践环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建单独的文件夹作为实验环境"><span class="nav-number">2.</span> <span class="nav-text">新建单独的文件夹作为实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-yml内容"><span class="nav-number">3.</span> <span class="nav-text">docker-compose.yml内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-conf中的核心配置"><span class="nav-number">4.</span> <span class="nav-text">nginx.conf中的核心配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx其他常见的负载策略"><span class="nav-number">5.</span> <span class="nav-text">nginx其他常见的负载策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制http-header"><span class="nav-number">6.</span> <span class="nav-text">定制http header</span></a></li></ol></div>
             
 
           </div>
@@ -553,7 +562,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
