@@ -1,0 +1,684 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="concurrency," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本篇Blog是《java并发编程的艺术》第九章线程池部分读后总结。
+核心参数1234567public ThreadPoolExecutor(int corePoolSize,                          int maximumPoolSize,                          long keepAliveTime,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java线程池">
+<meta property="og:url" content="http://yoursite.com/2017/02/03/threadpool/index.html">
+<meta property="og:site_name" content="Tobby's Blog">
+<meta property="og:description" content="本篇Blog是《java并发编程的艺术》第九章线程池部分读后总结。
+核心参数1234567public ThreadPoolExecutor(int corePoolSize,                          int maximumPoolSize,                          long keepAliveTime,">
+<meta property="og:image" content="http://yoursite.com/img/threadPool.jpg">
+<meta property="og:updated_time" content="2017-02-03T06:50:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java线程池">
+<meta name="twitter:description" content="本篇Blog是《java并发编程的艺术》第九章线程池部分读后总结。
+核心参数1234567public ThreadPoolExecutor(int corePoolSize,                          int maximumPoolSize,                          long keepAliveTime,">
+<meta name="twitter:image" content="http://yoursite.com/img/threadPool.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/03/threadpool/"/>
+
+
+
+
+
+  <title> java线程池 | Tobby's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Tobby's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/03/threadpool/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tobby">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Tobby's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Tobby's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java线程池
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T09:27:23+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/concurrency/" itemprop="url" rel="index">
+                    <span itemprop="name">concurrency</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇Blog是《java并发编程的艺术》第九章线程池部分读后总结。</p>
+<h4 id="核心参数"><a href="#核心参数" class="headerlink" title="核心参数"></a>核心参数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></div><div class="line">                          <span class="keyword">int</span> maximumPoolSize,</div><div class="line">                          <span class="keyword">long</span> keepAliveTime,</div><div class="line">                          TimeUnit unit,</div><div class="line">                          BlockingQueue&lt;Runnable&gt; workQueue) &#123;</div><div class="line">    <span class="keyword">this</span>(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,</div><div class="line">         Executors.defaultThreadFactory(), defaultHandler);</div></pre></td></tr></table></figure>
+<h5 id="corePoolSize（线程池的基本大小）："><a href="#corePoolSize（线程池的基本大小）：" class="headerlink" title="corePoolSize（线程池的基本大小）："></a>corePoolSize（线程池的基本大小）：</h5><p>​    当提交一个任务到线程池时，线程池会创建一个线程来执行任务，即使其他空闲的基本线程能够执行新任务也会创建线程，等到需要执行的任务数大于线程池基本大小时就不再创建。如果调用了线程池的prestartAllCoreThreads()方法，线程池会提前创建并启动所有基本线程，代码如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">    ArrayBlockingQueue&lt;Runnable&gt; arrayBlockingQueue = new ArrayBlockingQueue&lt;&gt;(1);</div><div class="line">    ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, 2, 60L, TimeUnit.MINUTES, arrayBlockingQueue);</div><div class="line">    threadPoolExecutor.prestartAllCoreThreads();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="maximumPoolSize：线程池的最大线程数"><a href="#maximumPoolSize：线程池的最大线程数" class="headerlink" title="maximumPoolSize：线程池的最大线程数"></a>maximumPoolSize：线程池的最大线程数</h5><p>​    当任务队列已满时，线程池将创建新的线程，直到达到maximumPoolSize</p>
+<h5 id="BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。"><a href="#BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。" class="headerlink" title="BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。"></a>BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。</h5><p>比较常见的可使用的阻塞队列：</p>
+<p>​      <em>ArrayBlockingQueue</em>:常见的有界阻塞队列，FIFO</p>
+<p>​      <em>LinkedBlockingQueue</em>：一个基于链表结构的阻塞队列，此队列按FIFO排序元素，吞吐量通常要高于ArrayBlockingQueue。静态工厂方法Executors.newFixedThreadPool()使用了这个队列。</p>
+<p>​      <em>SynchronousQueue</em>：一个不存储元素的阻塞队列。每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于Linked-Block-ingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。</p>
+<p>​     <strong>maximumPoolSize</strong>（线程池最大数量）：线程池允许创建的最大线程数。如果队列满了，并且已创建的线程数小于最大线程数，则线程池会再创建新的线程执行任务。**值得注意的是，如果使用了无界的任务队列这个参数其实就没意义了，因为任务队列永远不会满，则线程数量永远不会大于corePoolSize。</p>
+<h5 id="ThreadFactory：创建线程的工厂。"><a href="#ThreadFactory：创建线程的工厂。" class="headerlink" title="ThreadFactory：创建线程的工厂。"></a>ThreadFactory：创建线程的工厂。</h5><p>​    默认即可。guava提高一种可以自定义线程名称的工厂类，可以提高线程的辨识度。</p>
+<h5 id="RejectedExecutionHandler（饱和策略）："><a href="#RejectedExecutionHandler（饱和策略）：" class="headerlink" title="RejectedExecutionHandler（饱和策略）："></a>RejectedExecutionHandler（饱和策略）：</h5><p>​    当队列和线程池都满了，说明线程池处于饱和状态，那么必须采取一种策略处理提交的新任务。这个策略默认情况下是AbortPolicy，表示无法处理新任务时抛出异常。在JDK 1.5中Java线程池框架提供了以下4种策略。</p>
+<p>​    AbortPolicy：直接抛出异常。   </p>
+<p>​       CallerRunsPolicy：只用调用者所在线程来运行任务。   </p>
+<p>​       DiscardOldestPolicy：丢弃队列里最近的一个任务，并执行当前任务。   </p>
+<p>​       DiscardPolicy：不处理，丢弃掉。</p>
+<p>当然也可以实现RejectedExceptionHandler自定义处理策略，发邮件，或者记录下来之类的。</p>
+<h5 id="keepAliveTime和TimeUnit："><a href="#keepAliveTime和TimeUnit：" class="headerlink" title="keepAliveTime和TimeUnit："></a>keepAliveTime和TimeUnit：</h5><p>当线程超过线程池corePoolSize后，在一定的时间内没有任务，则kill掉。这是用来规定时间的。取决于任务进入的频率，合理的时间可以避免频繁创建和结束线程。</p>
+<h4 id="线程池的工作流程"><a href="#线程池的工作流程" class="headerlink" title="线程池的工作流程"></a>线程池的工作流程</h4><p><img src="/img/threadPool.jpg" alt="s"></p>
+<p>ThreadPoolExecutor执行execute方法分下面4种情况。</p>
+<p>1）如果当前运行的线程少于corePoolSize，则创建新线程来执行任务（注意，执行这一步骤需要获取全局锁）。</p>
+<p>2）如果运行的线程等于或多于corePoolSize，则将任务加入BlockingQueue。</p>
+<p>3）如果无法将任务加入BlockingQueue（队列已满），则创建新的线程来处理任务，直到线程数量达到maximumPoolSize。（注意，执行这一步骤需要获取全局锁）。</p>
+<p>4）如果创建新线程将使当前运行的线程超出maximumPoolSize，任务将被拒绝，并调用Re-jectedExecutionHandler.rejectedExecution()方法。</p>
+<p>​        ThreadPoolExecutor采取上述步骤的总体设计思路，是为了在执行execute()方法时，尽可能地避免获取全局锁（那将会是一个严重的可伸缩瓶颈）。在ThreadPoolExecutor完成预热之后（当前运行的线程数大于等于corePoolSize），几乎所有的execute()方法调用都是执行步骤2，而步骤2不需要获取全局锁。</p>
+<h4 id="线程池的关闭"><a href="#线程池的关闭" class="headerlink" title="线程池的关闭"></a>线程池的关闭</h4><p>shutdownNow (试图Interrupt所有的任务)</p>
+<p>shutdown（试图Interrupt待执行的任务）</p>
+<p>2个方法调用后isShutdwon都返回true，但要注意的是只有任务本身可以被Interrupt，处理了Interrupt信号才能被中断，不能的话，该咋样还是咋样。这和线程的中断是一个道理。</p>
+<h4 id="线程池的监控"><a href="#线程池的监控" class="headerlink" title="线程池的监控"></a>线程池的监控</h4><p>合理的设置线程池的corePoolSize和maxPoolSize，选择合适的BlockingQueue避免资源浪费和等待任务过多。除了预先估算以外，可以通过监控线程池的状态调整。ThreadPoolExecutor提供了一些方法反返回线程池的关键信息。</p>
+<p>比如getPoolSize线程池的当期线程数量，getActiveCount之类的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/concurrency/" rel="tag"># concurrency</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/29/juc/" rel="next" title="java并发包工具-ArrayBlockingQueue">
+                <i class="fa fa-chevron-left"></i> java并发包工具-ArrayBlockingQueue
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/10/netty-buffer/" rel="prev" title="netty的bytebuf总结">
+                netty的bytebuf总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tobby" />
+          <p class="site-author-name" itemprop="name">Tobby</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心参数"><span class="nav-number">1.</span> <span class="nav-text">核心参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#corePoolSize（线程池的基本大小）："><span class="nav-number">1.1.</span> <span class="nav-text">corePoolSize（线程池的基本大小）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#maximumPoolSize：线程池的最大线程数"><span class="nav-number">1.2.</span> <span class="nav-text">maximumPoolSize：线程池的最大线程数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。"><span class="nav-number">1.3.</span> <span class="nav-text">BlockingQueue：核心线程数和最大线程数之间的任务缓冲队列。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ThreadFactory：创建线程的工厂。"><span class="nav-number">1.4.</span> <span class="nav-text">ThreadFactory：创建线程的工厂。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RejectedExecutionHandler（饱和策略）："><span class="nav-number">1.5.</span> <span class="nav-text">RejectedExecutionHandler（饱和策略）：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#keepAliveTime和TimeUnit："><span class="nav-number">1.6.</span> <span class="nav-text">keepAliveTime和TimeUnit：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的工作流程"><span class="nav-number">2.</span> <span class="nav-text">线程池的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的关闭"><span class="nav-number">3.</span> <span class="nav-text">线程池的关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池的监控"><span class="nav-number">4.</span> <span class="nav-text">线程池的监控</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tobby</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

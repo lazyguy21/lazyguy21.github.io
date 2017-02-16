@@ -1,0 +1,673 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Lazyguy's Blog" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jcmd，1.7发布新的jvm相关信息的诊断工具，Oracle官网建议的替代jmap的工具。注意其使用条件是只能在被诊断的JVM同台sever上，并且具有相同的用户和组(user and group).
+jcmd最简单的用法是列出机器上启动的java进程。直接输出jcmd，在我的机器上显示如下：
+1234567825571 org.jetbrains.jps.cmdline.Launcher /A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm工具_jcmd">
+<meta property="og:url" content="http://yoursite.com/2017/02/15/jvm-jcmd/index.html">
+<meta property="og:site_name" content="Tobby's Blog">
+<meta property="og:description" content="jcmd，1.7发布新的jvm相关信息的诊断工具，Oracle官网建议的替代jmap的工具。注意其使用条件是只能在被诊断的JVM同台sever上，并且具有相同的用户和组(user and group).
+jcmd最简单的用法是列出机器上启动的java进程。直接输出jcmd，在我的机器上显示如下：
+1234567825571 org.jetbrains.jps.cmdline.Launcher /A">
+<meta property="og:updated_time" content="2017-02-15T07:10:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm工具_jcmd">
+<meta name="twitter:description" content="jcmd，1.7发布新的jvm相关信息的诊断工具，Oracle官网建议的替代jmap的工具。注意其使用条件是只能在被诊断的JVM同台sever上，并且具有相同的用户和组(user and group).
+jcmd最简单的用法是列出机器上启动的java进程。直接输出jcmd，在我的机器上显示如下：
+1234567825571 org.jetbrains.jps.cmdline.Launcher /A">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/02/15/jvm-jcmd/"/>
+
+
+
+
+
+  <title> jvm工具_jcmd | Tobby's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Tobby's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/15/jvm-jcmd/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tobby">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Tobby's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Tobby's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jvm工具_jcmd
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-15T09:18:05+08:00">
+                2017-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>jcmd，1.7发布新的jvm相关信息的诊断工具，Oracle官网建议的替代jmap的工具。注意其使用条件是只能在被诊断的JVM同台sever上，并且具有相同的用户和组(user and group).</p>
+<p>jcmd最简单的用法是列出机器上启动的java进程。直接输出jcmd，在我的机器上显示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">25571 org.jetbrains.jps.cmdline.Launcher /Applications/IntelliJ IDEA.app/Contents/lib/javac2.jar:/Applications/IntelliJ IDEA.app/Contents/lib/snappy-in-java-0.5.1.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jna.jar:/Applications/IntelliJ IDEA.app/Contents/lib/openapi.jar:/Applications/IntelliJ IDEA.app/Contents/lib/oromatcher.jar:/Applications/IntelliJ IDEA.app/Contents/lib/trove4j.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jps-builders.jar:/Applications/IntelliJ IDEA.app/Contents/lib/nanoxml-2.2.3.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jgoodies-forms.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jdom.jar:/Applications/IntelliJ IDEA.app/Contents/lib/asm-all.jar:/Applications/IntelliJ IDEA.app/Contents/lib/protobuf-2.5.0.jar:/Applications/IntelliJ IDEA.app/Contents/lib/rt/jps-plugin-system.jar:/Applications/IntelliJ IDEA.app/Contents/lib/jna-platform.jar:/Applications/IntelliJ IDEA.app/Contents/lib/annotations.jar:/Applications/IntelliJ IDEA.app/Contents/lib/forms_rt.jar:/Applications/Intelli</div><div class="line">21156 /Applications/SmartGit.app/Contents/Resources/Java/bootloader.jar</div><div class="line">25542 org.jetbrains.idea.maven.server.RemoteMavenServer</div><div class="line">25622 sun.tools.jcmd.JCmd</div><div class="line">23880 </div><div class="line">25485 </div><div class="line">23647 org.apache.catalina.startup.Bootstrap start</div><div class="line">24223</div></pre></td></tr></table></figure>
+<p>jdk还有个类似的工具“jps”,也具有此功能。</p>
+<p>jcmd指令后面通常接某一java进程的ID或者mainclass 加上各种指令，得到相关诊断信息。</p>
+<p>而jcmd提供了相当丰富的指令，正常人都不可能记住……输入help指令，可以显示可选指令的列表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">tobideMacBook-Pro:hexoBlog tobi$ jcmd 23647 help</div><div class="line">23647:</div><div class="line">The following commands are available:</div><div class="line">JFR.stop</div><div class="line">JFR.start</div><div class="line">JFR.dump</div><div class="line">JFR.check</div><div class="line">VM.native_memory</div><div class="line">VM.check_commercial_features</div><div class="line">VM.unlock_commercial_features</div><div class="line">ManagementAgent.stop</div><div class="line">ManagementAgent.start_local</div><div class="line">ManagementAgent.start</div><div class="line">GC.rotate_log</div><div class="line">Thread.print</div><div class="line">GC.class_stats</div><div class="line">GC.class_histogram</div><div class="line">GC.heap_dump</div><div class="line">GC.run_finalization</div><div class="line">GC.run</div><div class="line">VM.uptime</div><div class="line">VM.flags</div><div class="line">VM.system_properties</div><div class="line">VM.command_line</div><div class="line">VM.version</div><div class="line">help</div></pre></td></tr></table></figure>
+<p>前面几个相关的功能,官网文档说明是可以线上动态诊断jvm信息的工具，但是要商用协议，没细研究，略过. 光看指令的名称，任然只能大概知道他的意思，如果想进一步了解该指令，继续在help 后面加上指令，可以看见详细说明，如下此指令的意思是打印jvm中线程的情况，impact表示对运行中的JVM的影响，permission，需要的权限，使用的语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">jcmd 23647 <span class="built_in">help</span> Thread.print</div><div class="line">23647:</div><div class="line">Thread.print</div><div class="line">Print all threads with stacktraces.</div><div class="line"></div><div class="line">Impact: Medium: Depends on the number of threads.</div><div class="line"></div><div class="line">Permission: java.lang.management.ManagementPermission(monitor)</div><div class="line"></div><div class="line">Syntax : Thread.print [options]</div><div class="line"></div><div class="line">Options: (options must be specified using the &lt;key&gt; or &lt;key&gt;=&lt;value&gt; syntax)</div><div class="line">	<span class="_">-l</span> : [optional] <span class="built_in">print</span> java.util.concurrent locks (BOOLEAN, <span class="literal">false</span>)</div></pre></td></tr></table></figure>
+<h5 id="打印jvm中的线程细节"><a href="#打印jvm中的线程细节" class="headerlink" title="打印jvm中的线程细节"></a>打印jvm中的线程细节</h5><p>jcmd 23647  Thread.print -l</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">Thread.print -l</div><div class="line">23647:</div><div class="line">2017-02-15 10:27:29</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.112-b16 mixed mode):</div><div class="line"></div><div class="line">&quot;Attach Listener&quot; #1598 daemon prio=9 os_prio=31 tid=0x00007f9ec22e4000 nid=0x441b waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">   Locked ownable synchronizers:</div><div class="line">	- None</div><div class="line"></div><div class="line">&quot;RMI TCP Connection(6)-127.0.0.1-EventThread&quot; #1593 daemon prio=5 os_prio=31 tid=0x00007f9ebc8b0800 nid=0x7fbb waiting on condition [0x0000700011190000]</div><div class="line">   java.lang.Thread.State: WAITING (parking)</div><div class="line">	at sun.misc.Unsafe.park(Native Method)</div><div class="line">	- parking to wait for  &lt;0x000000077ad4d708&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)</div><div class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)</div><div class="line">	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)</div><div class="line">	at org.apache.zookeeper.ClientCnxn$EventThread.run(ClientCnxn.java:494)</div><div class="line"></div><div class="line">   Locked ownable synchronizers:</div><div class="line">	- None</div><div class="line"></div><div class="line">&quot;RMI TCP Connection(10.18.19.28:12181)&quot; #1592 daemon prio=5 os_prio=31 tid=0x00007f9eb887e000 nid=0x8f5f runnable [0x0000700010d84000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">	at sun.nio.ch.KQueueArrayWrapper.kevent0(Native Method)</div><div class="line">	at sun.nio.ch.KQueueArrayWrapper.poll(KQueueArrayWrapper.java:198)</div><div class="line">	at sun.nio.ch.KQueueSelectorImpl.doSelect(KQueueSelectorImpl.java:117)</div><div class="line">	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:86)</div><div class="line">	- locked &lt;0x000000077ad4bfa0&gt; (a sun.nio.ch.Util$3)</div><div class="line">	- locked &lt;0x000000077ad4bf90&gt; (a java.util.Collections$UnmodifiableSet)</div><div class="line">	- locked &lt;0x000000077ad4be70&gt; (a sun.nio.ch.KQueueSelectorImpl)</div><div class="line">	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:97)</div><div class="line">	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:349)</div><div class="line">	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1081)</div><div class="line"></div><div class="line">   Locked ownable synchronizers:</div><div class="line">	- None</div><div class="line"></div><div class="line">&quot;Curator-Framework-0-EventThread&quot; #1591 daemon prio=5 os_prio=31 tid=0x00007f9ebf060000 nid=0xa563 waiting on condition [0x0000700010978000]</div><div class="line">   java.lang.Thread.State: WAITING (parking)</div><div class="line">	at sun.misc.Unsafe.park(Native Method)</div><div class="line">	- parking to wait for  &lt;0x000000077f1aaa50&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)</div><div class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)</div><div class="line">	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)</div><div class="line">	at org.apache.zookeeper.ClientCnxn$EventThread.run(ClientCnxn.java:494)</div><div class="line"></div><div class="line">   Locked ownable synchronizers:</div><div class="line">	- None</div></pre></td></tr></table></figure>
+<p>如上，可以导出jvm中的线程细节。指令中的-l是打印线程所拥有的锁的情况。</p>
+<p>另外jstack和jcmd Thread.print都具有发现死锁的功能。</p>
+<p>2个线程分别持有锁A和锁B,去取对方的锁，java代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public class DeadLock &#123;</div><div class="line">    public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">        ReentrantLock lockA = new ReentrantLock();</div><div class="line">        ReentrantLock lockB = new ReentrantLock();</div><div class="line">        Condition conditionA = lockA.newCondition();</div><div class="line">        Condition conditionB = lockB.newCondition();</div><div class="line">        new Thread(</div><div class="line">                () -&gt; &#123;</div><div class="line">                    try &#123;</div><div class="line">                        lockA.lock();</div><div class="line">                        TimeUnit.SECONDS.sleep(2L);</div><div class="line">                        lockB.lock();</div><div class="line"></div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125; finally &#123;</div><div class="line">                        lockA.unlock();</div><div class="line">                        lockB.unlock();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">        ).start();</div><div class="line"></div><div class="line">        new Thread(</div><div class="line">                () -&gt; &#123;</div><div class="line">                    try &#123;</div><div class="line">                        lockB.lock();</div><div class="line">                        TimeUnit.SECONDS.sleep(2L);</div><div class="line">                        lockA.lock();</div><div class="line"></div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125; finally &#123;</div><div class="line">                        lockA.unlock();</div><div class="line">                        lockB.unlock();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">        ).start();</div><div class="line">        TimeUnit.DAYS.sleep(1L);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行起来后，使用jcmd pid Thread.print -l，会发现多了一些显示如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">Found one Java-level deadlock:</div><div class="line">=============================</div><div class="line">&quot;Thread-1&quot;:</div><div class="line">  waiting for ownable synchronizer 0x000000076abd6b20, (a java.util.concurrent.locks.ReentrantLock$NonfairSync),</div><div class="line">  which is held by &quot;Thread-0&quot;</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">  waiting for ownable synchronizer 0x000000076abd6b50, (a java.util.concurrent.locks.ReentrantLock$NonfairSync),</div><div class="line">  which is held by &quot;Thread-1&quot;</div><div class="line"></div><div class="line">Java stack information for the threads listed above:</div><div class="line">===================================================</div><div class="line">&quot;Thread-1&quot;:</div><div class="line">	at sun.misc.Unsafe.park(Native Method)</div><div class="line">	- parking to wait for  &lt;0x000000076abd6b20&gt; (a java.util.concurrent.locks.ReentrantLock$NonfairSync)</div><div class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt(AbstractQueuedSynchronizer.java:836)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireQueued(AbstractQueuedSynchronizer.java:870)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquire(AbstractQueuedSynchronizer.java:1199)</div><div class="line">	at java.util.concurrent.locks.ReentrantLock$NonfairSync.lock(ReentrantLock.java:209)</div><div class="line">	at java.util.concurrent.locks.ReentrantLock.lock(ReentrantLock.java:285)</div><div class="line">	at lazyguy.yyf.exercise.DeadLock.lambda$main$1(DeadLock.java:39)</div><div class="line">	at lazyguy.yyf.exercise.DeadLock$$Lambda$2/363771819.run(Unknown Source)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">	at sun.misc.Unsafe.park(Native Method)</div><div class="line">	- parking to wait for  &lt;0x000000076abd6b50&gt; (a java.util.concurrent.locks.ReentrantLock$NonfairSync)</div><div class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt(AbstractQueuedSynchronizer.java:836)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireQueued(AbstractQueuedSynchronizer.java:870)</div><div class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer.acquire(AbstractQueuedSynchronizer.java:1199)</div><div class="line">	at java.util.concurrent.locks.ReentrantLock$NonfairSync.lock(ReentrantLock.java:209)</div><div class="line">	at java.util.concurrent.locks.ReentrantLock.lock(ReentrantLock.java:285)</div><div class="line">	at lazyguy.yyf.exercise.DeadLock.lambda$main$0(DeadLock.java:23)</div><div class="line">	at lazyguy.yyf.exercise.DeadLock$$Lambda$1/668386784.run(Unknown Source)</div><div class="line">	at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">Found 1 deadlock.</div></pre></td></tr></table></figure>
+<p>jcmd自动为你发现了死锁~~</p>
+<h5 id="GC-class-stats和GC-class-histogram"><a href="#GC-class-stats和GC-class-histogram" class="headerlink" title="GC.class_stats和GC.class_histogram"></a>GC.class_stats和GC.class_histogram</h5><p>显示jvm meta class的统计信息，impact high。</p>
+<h5 id="GC-heap-dump"><a href="#GC-heap-dump" class="headerlink" title="GC.heap_dump"></a>GC.heap_dump</h5><p>导出堆的快照文件，可以配合jvisualm使用。</p>
+<h5 id="GC-run-finalization和GC-run"><a href="#GC-run-finalization和GC-run" class="headerlink" title="GC.run_finalization和GC.run"></a>GC.run_finalization和GC.run</h5><p>调用 java.lang.System.runFinalization().方法和java.lang.System.gc()方法。</p>
+<h5 id="VM-uptime"><a href="#VM-uptime" class="headerlink" title="VM.uptime"></a>VM.uptime</h5><p>显示JVM启动的时间</p>
+<h5 id="VM-flags"><a href="#VM-flags" class="headerlink" title="VM.flags"></a>VM.flags</h5><p>打印虚拟机相关参数</p>
+<h5 id="VM-system-properties"><a href="#VM-system-properties" class="headerlink" title="VM.system_properties"></a>VM.system_properties</h5><p>打印当前jvm读到的system_properties,配合grep工具快速查看</p>
+<h5 id="VM-command-line"><a href="#VM-command-line" class="headerlink" title="VM.command_line"></a>VM.command_line</h5><p>打印”启动“JVM的时候使用了那些指令</p>
+<p>事实上jcmd是原来的</p>
+<p>jps(java 进程查找)+jstack(线程信息)+jmap(堆和meta data内存信息)</p>
+<p>这3样工具的集合加强版。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/10/netty-buffer/" rel="next" title="netty的bytebuf总结">
+                <i class="fa fa-chevron-left"></i> netty的bytebuf总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tobby" />
+          <p class="site-author-name" itemprop="name">Tobby</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#打印jvm中的线程细节"><span class="nav-number">1.</span> <span class="nav-text">打印jvm中的线程细节</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GC-class-stats和GC-class-histogram"><span class="nav-number">2.</span> <span class="nav-text">GC.class_stats和GC.class_histogram</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GC-heap-dump"><span class="nav-number">3.</span> <span class="nav-text">GC.heap_dump</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GC-run-finalization和GC-run"><span class="nav-number">4.</span> <span class="nav-text">GC.run_finalization和GC.run</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VM-uptime"><span class="nav-number">5.</span> <span class="nav-text">VM.uptime</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VM-flags"><span class="nav-number">6.</span> <span class="nav-text">VM.flags</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VM-system-properties"><span class="nav-number">7.</span> <span class="nav-text">VM.system_properties</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VM-command-line"><span class="nav-number">8.</span> <span class="nav-text">VM.command_line</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tobby</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
